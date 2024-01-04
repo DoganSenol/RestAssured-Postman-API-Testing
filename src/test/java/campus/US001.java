@@ -9,7 +9,6 @@ import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
 public class US001 {
-    RequestSpecification requestSpec;
     @DataProvider
     Object [][] UserData(){
         Object[][] data={
@@ -42,6 +41,8 @@ public class US001 {
                         .then()
                         .statusCode(401)
                         .log().body()
+                        .body("type", instanceOf(String.class))
+                        .body("title", instanceOf(String.class))
                         .body("type", containsStringIgnoringCase("invalid_username_password"))
                         .body("title", containsStringIgnoringCase("Invalid username or password"))
                         .extract().response().detailedCookies()
@@ -67,6 +68,17 @@ public class US001 {
                         .then()
                         .statusCode(200)
                         .log().body()
+                        .body("access_token", instanceOf(String.class))
+                        .body("token_type", instanceOf(String.class))
+                        .body("refresh_token", instanceOf(String.class))
+                        .body("expires_in", instanceOf(Integer.class))
+                        .body("scope", instanceOf(String.class))
+                        .body("passwordChange", instanceOf(Boolean.class))
+                        .body("username", instanceOf(String.class))
+                        .body("iat", instanceOf(Integer.class))
+                        .body("jti", instanceOf(String.class))
+                        .body("is_2fa_enabled", instanceOf(Boolean.class))
+
                         .body("access_token", notNullValue())
                         .body("token_type", notNullValue())
                         .body("refresh_token", notNullValue())
@@ -77,12 +89,8 @@ public class US001 {
                         .body("iat", notNullValue())
                         .body("jti", notNullValue())
                         .body("is_2fa_enabled", notNullValue())
+
                         .extract().response().detailedCookies()
                 ;
-        requestSpec = new RequestSpecBuilder()
-                .addCookies(cookies)
-                .setContentType(ContentType.JSON)
-                .build()
-        ;
     }
 }
