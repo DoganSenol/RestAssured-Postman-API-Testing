@@ -138,7 +138,8 @@ public class US105 {
                         .get("school-service/api/student-group/")
 
                         .then()
-                        .extract().response();
+                        .extract().response()
+                ;
 
         /*
 
