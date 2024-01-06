@@ -45,6 +45,7 @@ public class US105 {
                         .post("/auth/login")
 
                         .then()
+                        .contentType(ContentType.JSON)
                         .log().body()
 
                         .statusCode(200)
@@ -104,6 +105,7 @@ public class US105 {
                         .post("school-service/api/student-group/")
 
                         .then()
+                        .contentType(ContentType.JSON)
                         .log().body()
 
                         .statusCode(201)
@@ -126,43 +128,8 @@ public class US105 {
                         .body("publicGroup", notNullValue())
                         .body("showToStudent", notNullValue())
 
-                        //.body("name", hasLength(1000))
-                        //.body("description", hasLength(5000))
-
                         .extract().path("id")
         ;
-
-        Response body =
-                given()
-                        .when()
-                        .get("school-service/api/student-group/")
-
-                        .then()
-                        .extract().response()
-                ;
-
-        /*
-
-        String name = body.path("name");
-        String description = body.path("description");
-        int characterCount = 1000;
-        int descriptionCount = 5000;
-
-        System.out.println("name = " + name);
-        System.out.println("description = " + description);
-
-        if (name.length() < characterCount) {
-            System.out.println("name is less than " + characterCount);
-        } else
-            System.out.println("name is bigger than " + characterCount);
-
-        if (description.length() < characterCount) {
-            System.out.println("description is less than " + descriptionCount);
-        } else
-            System.out.println("description is bigger than " + descriptionCount);
-
-         */
-
         System.out.println("studentGroupId = " + studentGroupId);
     }
 
@@ -177,9 +144,10 @@ public class US105 {
                 .post("school-service/api/student-group/")
 
                 .then()
+                .contentType(ContentType.JSON)
                 .statusCode(400)
-                .log().body()
                 .body("message", containsString("the same name already exists!"))
+                .log().body()
 
                 .body("type", instanceOf(String.class))
                 .body("status", instanceOf(Integer.class))
@@ -230,6 +198,7 @@ public class US105 {
                 .put("school-service/api/student-group/")
 
                 .then()
+                .contentType(ContentType.JSON)
                 .log().body()
 
                 .statusCode(200)
@@ -285,6 +254,7 @@ public class US105 {
                 .delete("school-service/api/student-group/" + studentGroupId)
 
                 .then()
+                .contentType(ContentType.JSON)
                 .log().body()
                 .statusCode(400)
                 .body("message", containsString("id does not exist!"))

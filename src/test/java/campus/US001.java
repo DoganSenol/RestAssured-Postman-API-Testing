@@ -39,6 +39,7 @@ public class US001 {
                         .post("/auth/login")
 
                         .then()
+                        .contentType(ContentType.JSON)
                         .statusCode(401)
                         .log().body()
                         .body("type", instanceOf(String.class))
@@ -66,6 +67,7 @@ public class US001 {
                         .post("/auth/login")
 
                         .then()
+                        .contentType(ContentType.JSON)
                         .statusCode(200)
                         .log().body()
                         .body("access_token", instanceOf(String.class))
