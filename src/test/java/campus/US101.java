@@ -2,25 +2,26 @@ package campus;
 
 import com.github.javafaker.Faker;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.http.Cookies;
-import io.restassured.response.Response;
+import io.restassured.http.*;
+
 import io.restassured.specification.RequestSpecification;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
-import java.lang.reflect.Array;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-import static io.restassured.RestAssured.baseURI;
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
+
 import static org.hamcrest.Matchers.*;
 
 public class US101 {
     Faker randomGenerator = new Faker();
     RequestSpecification requestSpec;
     String countryId = "5baac28d91cefe05fc6e3fe6";
+    String stateId;
+
+    Map<String, Object> countryObject;
+    Map<String, Object> newState;
+    Map<String, Object> updatedState;
 
     @BeforeClass
     public void Login() {
@@ -40,6 +41,7 @@ public class US101 {
                         .post("/auth/login")
 
                         .then()
+                        .contentType(ContentType.JSON)
                         .log().body()
 
                         .statusCode(200)
@@ -76,7 +78,7 @@ public class US101 {
     }
 
     @Test
-    public void countryList() {
+    public void stateList() {
         Map<String, String> countryList = new HashMap<>();
         countryList.put("name", "");
         countryList.put("countryId", countryId);
@@ -90,6 +92,7 @@ public class US101 {
                 .post("school-service/api/states/search/")
 
                 .then()
+                .contentType(ContentType.JSON)
                 .log().body()
 
                 .statusCode(200)
@@ -108,12 +111,18 @@ public class US101 {
         String rndName = randomGenerator.country().name() + randomGenerator.number().digits(5);
         String rndShortName = randomGenerator.country().countryCode3();
 
-        Map <String, String> newState = new HashMap<>();
+        countryObject = new HashMap<>();
+        countryObject.put("id", "63a41a0dcb75ee5c2199a8bc");
+
+        //Object[] translateName = new Object[1]; Bu da translateName için kullanılabilir.
+
+        newState = new HashMap<>();
         newState.put("name", rndName);
         newState.put("shortName", rndShortName);
-        newState.put("country.id", "63a41a0dcb75ee5c2199a8bc");
+        newState.put("country", countryObject);
+        newState.put("translateName", new ArrayList<>());
 
-        String stateId =
+        stateId =
                 given()
 
                         .spec(requestSpec)
@@ -123,18 +132,124 @@ public class US101 {
                         .post("school-service/api/states/")
 
                         .then()
+                        .contentType(ContentType.JSON)
                         .log().body()
 
                         .statusCode(201)
 
-                 .body("[0].id", instanceOf(String.class))
-                 .body("[0].country.id", instanceOf(String.class))
+                 .body("id", instanceOf(String.class))
+                 .body("country.id", instanceOf(String.class))
+                 .body("name", instanceOf(String.class))
+                 .body("shortName", instanceOf(String.class))
 
-                 .body("[0].id", notNullValue())
-                 .body("[0].country.id", notNullValue())
+                 .body("id", notNullValue())
+                 .body("country.id", notNullValue())
+                 .body("name", notNullValue())
+                 .body("shortName", notNullValue())
 
                         .extract().path("id")
         ;
-
+        System.out.println("createdStateId = " + stateId);
 }
+
+@Test(dependsOnMethods = "createNewState")
+    public void createNewStateNegative(){
+        given()
+                .spec(requestSpec)
+                .body(newState)
+                .when()
+                .post("school-service/api/states/")
+
+                .then()
+                .contentType(ContentType.JSON)
+                .statusCode(400)
+                .body("message", containsString(" already exists."))
+                .log().body()
+
+                .body("type", instanceOf(String.class))
+                .body("status", instanceOf(Integer.class))
+                .body("path", instanceOf(String.class))
+                .body("message", instanceOf(String.class))
+
+                .body("type", notNullValue())
+                .body("status", notNullValue())
+                .body("path", notNullValue())
+                .body("message", notNullValue())
+        ;
+    System.out.println("coudntCreateStateId = " + stateId);
+    }
+
+    @Test(dependsOnMethods = "createNewStateNegative")
+    public void updateState(){
+        String updatedName = randomGenerator.country().name() + randomGenerator.number().digits(5);
+        String updatedShortName = randomGenerator.country().countryCode3();
+
+        countryObject = new HashMap<>();
+        countryObject.put("id", "63a41a0dcb75ee5c2199a8bc");
+
+        //Object[] translateName = new Object[1]; Bu da translateName için kullanılabilir.
+
+        updatedState = new HashMap<>();
+        updatedState.put("id", stateId);
+        updatedState.put("name", updatedName);
+        updatedState.put("shortName", updatedShortName);
+        updatedState.put("country", countryObject);
+        updatedState.put("translateName", new ArrayList<>());
+
+        given()
+                .spec(requestSpec)
+                .body(updatedState)
+
+                .when()
+                .put("school-service/api/states/")
+
+                .then()
+                .contentType(ContentType.JSON)
+                .statusCode(200)
+                .log().body()
+
+                .body("id", instanceOf(String.class))
+                .body("country.id", instanceOf(String.class))
+                .body("name", instanceOf(String.class))
+                .body("shortName", instanceOf(String.class))
+
+                .body("id", notNullValue())
+                .body("country.id", notNullValue())
+                .body("name", notNullValue())
+                .body("shortName", notNullValue())
+        ;
+        System.out.println("updatedStateId = " + stateId);
+                ;
+    }
+
+    @Test(dependsOnMethods = "updateState")
+    public void deleteState(){
+        given()
+                .spec(requestSpec)
+
+                .when()
+                .delete("school-service/api/states/" + stateId)
+
+                .then()
+                .log().body()
+                .statusCode(200)
+
+        ;
+        System.out.println("deletedStateId = " + stateId);
+    }
+
+    @Test(dependsOnMethods = "deleteState")
+    public void deleteStateNegative(){
+        given()
+                .spec(requestSpec)
+
+                .when()
+                .delete("school-service/api/states/" + stateId)
+
+                .then()
+                .log().body()
+                .statusCode(200)
+        ;
+        System.out.println("secondTimeDeletedStateId = " + stateId);
+    }
 }
