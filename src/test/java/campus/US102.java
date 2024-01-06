@@ -1,4 +1,5 @@
 package campus;
+
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
@@ -6,13 +7,10 @@ import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
-
 import com.github.javafaker.Faker;
 
 public class US102 {
@@ -192,10 +190,6 @@ public class US102 {
     public void deleteNationalities() {
 
 
-
-
-
-
         given()
 
                 .spec(requestSpecification)
@@ -232,6 +226,7 @@ public class US102 {
                 .log().body()
                 .statusCode(400)
                 .body("message", containsString("Nationality not  found"))
+
 
 
         ;
