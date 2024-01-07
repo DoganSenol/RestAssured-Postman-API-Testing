@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.baseURI;
@@ -24,7 +25,7 @@ public class US105 {
     String rndDescription;
     Boolean rndPublicGroup;
     Boolean rndShowToStudent;
-    String schoolId = "646cbb07acf2ee0d37c6d984";
+    String schoolId = "6576fd8f8af7ce488ac69b89";
     Map<String, String> newStudentGroup;
 
     @BeforeClass
@@ -134,6 +135,46 @@ public class US105 {
     }
 
     @Test(dependsOnMethods = "createNewStudentGroup")
+    public void assertBodyOfNewStudentGroup(){
+        Map <String, String > studentGroup = new HashMap<>();
+        studentGroup.put("schoolId", schoolId);
+
+        Response body =
+                given()
+                        .spec(requestSpec)
+                        .body(studentGroup)
+
+                        .when()
+                        .post("school-service/api/student-group/search")
+
+                        .then()
+                        .log().body()
+                        .extract().response();
+
+        List <String> names = body.path("name");
+        List <String> descriptions = body.path("description");
+
+        int characterCount = 1000;
+        int descriptionCount = 5000;
+
+        for (String name:names) {
+            System.out.println("name = " + name);
+            if (name != null  && name.length() < characterCount) {
+                System.out.println("name is less than " + characterCount);
+            } else
+                System.out.println("name is null or bigger than " + characterCount);
+        }
+
+        for (String description:descriptions) {
+            System.out.println("description = " + description);
+            if (description != null && description.length() < characterCount) {
+                System.out.println("description is less than " + descriptionCount);
+            } else
+                System.out.println("description is null or bigger than " + descriptionCount);
+        }
+    }
+
+    @Test(dependsOnMethods = "assertBodyOfNewStudentGroup")
     public void createNewStudentGroupNegative() {
         given()
 
@@ -146,8 +187,8 @@ public class US105 {
                 .then()
                 .contentType(ContentType.JSON)
                 .statusCode(400)
-                .body("message", containsString("the same name already exists!"))
                 .log().body()
+                .body("message", containsString("the same name already exists!"))
 
                 .body("type", instanceOf(String.class))
                 .body("status", instanceOf(Integer.class))
@@ -229,8 +270,8 @@ public class US105 {
         System.out.println("updatedStudentGroupName = " + updatedStudentGroupName);
     }
 
-    @Test (dependsOnMethods = "updateStudentGroup")
-    public void deleteStudentGroup(){
+    @Test(dependsOnMethods = "updateStudentGroup")
+    public void deleteStudentGroup() {
         given()
                 .spec(requestSpec)
 
@@ -245,8 +286,8 @@ public class US105 {
         System.out.println("studentGroupId = " + studentGroupId);
     }
 
-    @Test (dependsOnMethods ="deleteStudentGroup")
-    public void deleteStudentGroupNegative(){
+    @Test(dependsOnMethods = "deleteStudentGroup")
+    public void deleteStudentGroupNegative() {
         given()
                 .spec(requestSpec)
 
