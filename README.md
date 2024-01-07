@@ -2,7 +2,6 @@
 
 # Used Technologys
 
-
 ![Maven Central](https://img.shields.io/maven-central/v/io.rest-assured/rest-assured?versionSuffix=5.3.0&label=Rest-Assured)
 ![Maven Central](https://img.shields.io/maven-central/v/org.testng/testng?versionSuffix=7.5.1&label=testNG)
 ![Maven Central](https://img.shields.io/maven-central/v/org.hamcrest/hamcrest-all?versionSuffix=1.3&label=hamcrest)
@@ -49,5 +48,6 @@ List of Dependencies
 | Talat Aihemaijiang | javauchun@gmail.com      | https://github.com/TailaitiAihemaijang |
 | Ümit Boyraz        | iuboyraz@gmail.com       | https://github.com/iuboyraz            |
 | Senol Dogan        | senoldogan2018@gmail.com | https://github.com/DoganSenol          |
+| Aygül Abilova      | abilovaygul@gmail.com    | https://github.com/AyGulll             |
 
 ---
