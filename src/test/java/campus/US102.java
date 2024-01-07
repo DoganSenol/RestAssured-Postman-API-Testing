@@ -226,12 +226,7 @@ public class US102 {
                 .log().body()
                 .statusCode(400)
                 .body("message", containsString("Nationality not  found"))
-
-
-
         ;
-
-
     }
 
 
