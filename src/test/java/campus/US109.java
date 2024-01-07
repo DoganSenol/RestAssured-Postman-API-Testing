@@ -233,14 +233,14 @@ public class US109 {
     @Test(dependsOnMethods = "editGradingScheme")
     public void deleteGradingSchemeNegativeTest() {
 
-        Map<String, String> deleteGradingSchemeNegativ = new HashMap<>();
-        deleteGradingSchemeNegativ.put("X-School", schoolID);
+        Map<String, String> deleteGradingSchemeNegative = new HashMap<>();
+        deleteGradingSchemeNegative.put("X-School", schoolID);
 
 
         given()
 
                 .spec(requestSpecification)
-                .headers(deleteGradingSchemeNegativ)
+                .headers(deleteGradingSchemeNegative)
 
 
                 .when()

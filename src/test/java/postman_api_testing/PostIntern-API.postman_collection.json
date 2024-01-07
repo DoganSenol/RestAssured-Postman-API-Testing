@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "0f79c85d-8717-4a1d-8fc0-f0152450ec07",
+		"_postman_id": "a0d6dca8-2f08-44b1-b726-e0f5d59dc584",
 		"name": "PostIntern-API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30595951",
-		"_collection_link": "https://orange-sunset-24477.postman.co/workspace/Team-Workspace~2ced4943-f079-4084-865e-4a2ccecac8bd/collection/30595951-0f79c85d-8717-4a1d-8fc0-f0152450ec07?action=share&source=collection_link&creator=30595951"
+		"_collection_link": "https://orange-sunset-24477.postman.co/workspace/Team-Workspace~2ced4943-f079-4084-865e-4a2ccecac8bd/collection/30595951-a0d6dca8-2f08-44b1-b726-e0f5d59dc584?action=share&source=collection_link&creator=30595951"
 	},
 	"item": [
 		{
@@ -611,7 +611,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"id\": null,\n  \"name\": \"Istanbul\",\n  \"shortName\": \"IST\",\n  \"country\": {\n    \"id\": \"63a41a0dcb75ee5c2199a8bc\"\n  },\n  \"translateName\": []\n}",
+											"raw": "{\n  \"id\": null,\n  \"name\": \"{{$randomCity}} - {{$randomAbbreviation}}\",\n  \"shortName\": \"{{$randomAbbreviation}}\",\n  \"country\": {\n    \"id\": \"63a41a0dcb75ee5c2199a8bc\"\n  },\n  \"translateName\": []\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -736,7 +736,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"id\": \"{{statesID}}\",\n  \"name\": \"Istanbul Beykoz\",\n  \"shortName\": \"IST\",\n  \"country\": {\n    \"id\": \"63a41a0dcb75ee5c2199a8bc\"\n  },\n  \"translateName\": []\n}",
+											"raw": "{\n  \"id\": \"{{statesID}}\",\n  \"name\": \"{{$randomCity}} - {{$randomAbbreviation}}\",\n  \"shortName\": \"{{$randomAbbreviation}}\",\n  \"country\": {\n    \"id\": \"63a41a0dcb75ee5c2199a8bc\"\n  },\n  \"translateName\": []\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -759,6 +759,39 @@
 								},
 								{
 									"name": "US101-Delete State",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{URL}}/school-service/api/states/{{statesID}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"school-service",
+												"api",
+												"states",
+												"{{statesID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "US101-Delete State Copy",
 									"event": [
 										{
 											"listen": "test",
@@ -1395,7 +1428,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"orderNo\": 10,\r\n  \"columnSize\": 1,\r\n  \"translateName\": [],\r\n  \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomCity}}\",\r\n  \"orderNo\": 10,\r\n  \"columnSize\": 1,\r\n  \"translateName\": [],\r\n  \"schoolId\": \"6576fd8f8af7ce488ac69b89\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1417,7 +1450,7 @@
 									"response": []
 								},
 								{
-									"name": "US104-Create Custom Field Group Nigativ",
+									"name": "US104-Create Custom Field Group Negative",
 									"event": [
 										{
 											"listen": "test",
@@ -1438,7 +1471,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"orderNo\": 10,\r\n  \"columnSize\": 1,\r\n  \"translateName\": [],\r\n  \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+											"raw": "{\r\n  \"id\": null,\r\n  \"name\": \"{{$randomCity}}\",\r\n  \"orderNo\": 10,\r\n  \"columnSize\": 1,\r\n  \"translateName\": [],\r\n  \"schoolId\": \"6576fd8f8af7ce488ac69b89\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1479,7 +1512,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n  \"id\": \"{{CustomID}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"orderNo\": 10,\r\n  \"columnSize\": 1,\r\n  \"translateName\": [],\r\n  \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+											"raw": "{\r\n  \"id\": \"{{CustomID}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"orderNo\": 10,\r\n  \"columnSize\": 1,\r\n  \"translateName\": [],\r\n  \"schoolId\": \"6576fd8f8af7ce488ac69b89\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1520,7 +1553,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n  \"id\": \"{{CustomID}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"orderNo\": 1,\r\n  \"columnSize\": 1,\r\n  \"translateName\": [],\r\n  \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\r\n}",
+											"raw": "{\r\n  \"id\": \"{{CustomID}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"orderNo\": 1,\r\n  \"columnSize\": 1,\r\n  \"translateName\": [],\r\n  \"schoolId\": \"6576fd8f8af7ce488ac69b89\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -1622,6 +1655,48 @@
 				{
 					"name": "Student Groups US105",
 					"item": [
+						{
+							"name": "US105-List Student Group",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"States list has been successfully created\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": null,\n  \"description\": null,\n  \"publicGroup\": null,\n  \"showToStudent\": null,\n  \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/school-service/api/student-group/search",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"school-service",
+										"api",
+										"student-group",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "US105-Add a New Student Group",
 							"event": [
@@ -2235,7 +2310,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": null,\n    \"schoolId\": \"646cbb07acf2ee0d37c6d984\",\n    \"name\": \"TechStudy35\",\n    \"description\": \"Happy coding for everyone :)\",\n    \"active\": true,\n    \"publicGroup\": true,\n    \"showToStudent\": false\n}",
+									"raw": "{\n    \"name\": \"{{$randomJobArea}} - {{$randomAbbreviation}}\",\n    \"description\": \"{{$randomJobDescriptor}}\",\n    \"publicGroup\": \"{{$randomBoolean}}\",\n    \"showToStudent\": \"{{$randomBoolean}}\",\n    \"schoolId\": \"646cbb07acf2ee0d37c6d984\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2272,15 +2347,12 @@
 									}
 								}
 							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "",
+									"raw": "{\r\n    \"academicPeriodId\": \"6577022e8af7ce488ac69b96\",\r\n    \"classId\": \"65770d9b8af7ce488ac69bb6\",\r\n    \"classStudentIds\": [\r\n        \"657711ca8af7ce488ac6a62d\"\r\n    ]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2288,16 +2360,16 @@
 									}
 								},
 								"url": {
-									"raw": "{{URL}}/school-service/api/students/group/{{groupID}}?page=0&size=10",
+									"raw": "{{URL}}/school-service/api/classes/students/pageable?page=0&size=10",
 									"host": [
 										"{{URL}}"
 									],
 									"path": [
 										"school-service",
 										"api",
+										"classes",
 										"students",
-										"group",
-										"{{groupID}}"
+										"pageable"
 									],
 									"query": [
 										{
@@ -2337,7 +2409,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\n  \"646dfdfaab1d8d3d700f1035\"\n]",
+									"raw": "[\n    \"646dfdfaab1d8d3d700f1035\"\n]",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2997,6 +3069,41 @@
 								},
 								{
 									"name": "US110-Edit Incident Type",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"// Response body'deki JSON verisine erişim\r",
+													"var responseBody = pm.response.json();\r",
+													"\r",
+													"// İstenilen verilere erişim örnekleri\r",
+													"var id = responseBody.id;\r",
+													"var name = responseBody.name;\r",
+													"var minPoint = responseBody.minPoint;\r",
+													"var maxPoint = responseBody.maxPoint;\r",
+													"\r",
+													"// Bu verileri konsola yazdırma\r",
+													"console.log('ID:', id);\r",
+													"console.log('Name:', name);\r",
+													"console.log('Min Point:', minPoint);\r",
+													"console.log('Max Point:', maxPoint);\r",
+													"\r",
+													"// Bu verileri Postman ortamına kaydetme\r",
+													"pm.environment.set('idValue', id);\r",
+													"pm.environment.set('nameValue', name);\r",
+													"pm.environment.set('minPointValue', minPoint);\r",
+													"pm.environment.set('maxPointValue', maxPoint);\r",
+													"\r",
+													"\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
 									"request": {
 										"method": "PUT",
 										"header": [],
